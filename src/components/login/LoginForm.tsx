@@ -16,11 +16,12 @@ interface ILoginData {
 
 type Props = {
   onSubmit: (data: ILoginData) => void;
+  isLoading: boolean;
 };
 
 //valida os campos e manda para a função recebida por props da pagina login
 
-export function LoginForm({ onSubmit }: Props) {
+export function LoginForm({ onSubmit, isLoading }: Props) {
   const [loginData, setLoginData] = useState({ email: "", senha: "" });
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -53,12 +54,16 @@ export function LoginForm({ onSubmit }: Props) {
           value={loginData?.senha}
         />
         <SubmitButton
-          disabled={!isButtonEnabled}
+          disabled={!isButtonEnabled || isLoading}
           type="button"
-          style={{ cursor: !isButtonEnabled ? "not-allowed" : "pointer" }}
+          style={{
+            cursor: !isButtonEnabled ? "not-allowed" : "pointer",
+            backgroundColor:
+              !isButtonEnabled || isLoading ? "#3d3d3d" : "#05c46b",
+          }}
           onClick={() => onSubmit(loginData)}
         >
-          Enviar
+          {isLoading ? "Carregando" : "Enviar"}
         </SubmitButton>
       </Form>
     </Container>

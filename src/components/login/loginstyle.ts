@@ -1,16 +1,6 @@
 import styled from "styled-components";
 import { keyframes } from "styled-components";
 
-const drop = keyframes`
-  0%{
-    top: -60px;
-  }
-  100%{
-    top:50px;
-  }
-
-`;
-
 export const LoginContainer = styled.div`
   width: 100vw;
   height: 100vh;
@@ -41,7 +31,6 @@ export const LoginTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  align-items: center;
 `;
 
 export const FormLogin = styled.form`
@@ -79,40 +68,19 @@ export const LoginSubmit = styled.button`
   color: #fff;
   font-size: 1rem;
   font-weight: bold;
+  border: none;
   outline: none;
   border-radius: 8px;
+  transition: 0.5s;
 `;
 
 export const LoginTextLogo = styled.img`
-  width: 250px;
-  height: 70px;
+  width: 200px;
 `;
 
 export const LoginTextTitle = styled.h1`
   color: #fff;
-  font-size: 2.5rem;
-  text-align: center;
+  font-size: 2.8rem;
   user-select: none;
   font-family: "Roboto", sans-serif;
-`;
-
-export const ErrorWrapper = styled.div`
-  width: 250px;
-  height: 60px;
-  background-color: #dd5554;
-  position: absolute;
-  right: 5px;
-  top: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  animation: ${drop} 0.7s;
-`;
-
-export const ErrorTitle = styled.h3`
-  font-weight: bold;
-  font-family: "Roboto", sans-serif;
-  margin-bottom: 12px;
-  color: #fff;
 `;

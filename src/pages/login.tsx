@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Navigate } from "react-router-dom";
+import { useToast } from "../hooks/useToast";
 import { LoginForm } from "../components/login/LoginForm";
 import { LoginContainer } from "../components/login/loginstyle";
 import { LoginText } from "../components/login/LoginText";
@@ -13,32 +12,57 @@ interface ILoginData {
 }
 
 export function Login() {
-  const navigate = useNavigate();
+  const { toast, dismiss } = useToast();
+  const [isLoading, setLoadingStatus] = useState(false);
+  const [allowed, setAllowed] = useState(true);
   const { login, user } = useContext(AuthContext);
-
-  const errorNotify = () => {
-    toast("Error", {
-      theme: "dark",
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  };
+  const loadingToast = useRef("" as React.ReactText);
 
   async function handleLogin(loginData: ILoginData) {
+    setAllowed(false);
+    setLoadingStatus(true);
+
     try {
       await login(loginData);
-      return navigate("/home");
+      setLoadingStatus(false);
+
+      setTimeout(() => {
+        toast({
+          message: "login efetuado com sucesso",
+          type: "success",
+          position: "top-right",
+        });
+
+        setAllowed(true);
+      }, 700);
     } catch (error: any) {
-      errorNotify();
+      setLoadingStatus(false);
+
+      setTimeout(() => {
+        toast({ message: error.message, type: "error", position: "top-right" });
+      }, 700);
     }
   }
 
-  if (user) navigate("/home");
+  useEffect(() => {
+    if (isLoading) {
+      loadingToast.current = toast({
+        message: "carregando",
+        type: "info",
+        isLoading,
+        position: "top-right",
+      });
+    } else {
+      dismiss(loadingToast.current);
+    }
+  }, [isLoading]);
+
+  if (user && allowed) return <Navigate to="/" />;
 
   return (
     <LoginContainer>
-      <ToastContainer />
       <LoginText />
-      <LoginForm onSubmit={handleLogin} />
+      <LoginForm isLoading={isLoading} onSubmit={handleLogin} />
     </LoginContainer>
   );
 }

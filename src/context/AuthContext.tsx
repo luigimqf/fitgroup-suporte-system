@@ -1,4 +1,11 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  ReactComponentElement,
+  ReactElement,
+  useEffect,
+  useState,
+} from "react";
+import { Navigate } from "react-router-dom";
 import { api } from "../services";
 import { loginRequest } from "../services/login";
 
@@ -28,19 +35,24 @@ export const AuthProvider = ({ children }: Props) => {
     const loginData = await loginRequest(data);
 
     if (loginData) {
-      localStorage.setItem("user", loginData.token);
+      console.log(loginData);
+      const stringifiedToken = JSON.stringify(loginData.token);
+      localStorage.setItem("user", stringifiedToken);
+      setUser(stringifiedToken);
     }
   }
 
-  function logout(): void {
+  function logout(): ReactElement {
     setUser("");
+    localStorage.removeItem("user");
+    api.defaults.headers.common["Authorization"] = ``;
+    return <Navigate to="/login" />;
   } // TODO remover restos do user, redirecionar para login
 
   function handleUserAuthentication() {
     const stringfiedUser = localStorage.getItem("user");
 
     if (!stringfiedUser) {
-      api.defaults.headers.common["Authorization"] = ``;
       return;
     } //logout
     setUser(stringfiedUser);

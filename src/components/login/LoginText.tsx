@@ -5,10 +5,12 @@ import {
   LoginTextTitle,
 } from "./loginstyle";
 
+import fitgroupImg from "../../assets/fitgroup.png";
+
 export function LoginText() {
   return (
     <LoginTextContainer>
-      <LoginTextLogo src="../../assets/fitgroup.png" />
+      <LoginTextLogo draggable={false} src={fitgroupImg} />
       <LoginTextTitle> Abra o seu ticket na plataforma </LoginTextTitle>
     </LoginTextContainer>
   );

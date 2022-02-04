@@ -16,7 +16,7 @@ export async function loginRequest(values: ILoginData) {
     const { data } = await api.post<ILoginResponse>("/login", values);
 
     return data;
-  } catch (error) {
-    throw new Error();
+  } catch (error: any) {
+    throw new Error(error.response.data.message);
   }
 }
