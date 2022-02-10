@@ -10,11 +10,15 @@ export const LoginContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+
+  @media (max-width: 1100px) {
+    flex-direction: column;
+  }
 `;
 
 export const LoginFormContainer = styled.div`
-  width: 450px;
-  height: 400px;
+  width: 30%;
+  height: 60%;
   background-color: #202024;
 
   border-radius: 5px;
@@ -22,15 +26,40 @@ export const LoginFormContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 1100px) {
+    width: 60%;
+    height: 50%;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 768px) {
+    width: 70%;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 485px) {
+    width: 90%;
+    height: 50%;
+    margin-bottom: 10px;
+  }
 `;
 
 export const LoginTextContainer = styled.div`
-  width: 450px;
-  height: 400px;
+  width: 30%;
+  height: 60%;
 
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  align-items: center;
+
+  @media (max-width: 1100px) {
+    width: 60%;
+    height: 50%;
+
+    align-items: center;
+  }
 `;
 
 export const FormLogin = styled.form`
@@ -75,12 +104,17 @@ export const LoginSubmit = styled.button`
 `;
 
 export const LoginTextLogo = styled.img`
-  width: 200px;
+  width: 250px;
+
+  @media (max-width: 750px) {
+    width: 150px;
+  }
 `;
 
 export const LoginTextTitle = styled.h1`
   color: #fff;
-  font-size: 2.8rem;
+  font-size: clamp(1.3rem, 4vw, 2.8rem);
+  text-align: center;
   user-select: none;
   font-family: "Roboto", sans-serif;
 `;

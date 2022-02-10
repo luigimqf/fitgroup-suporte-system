@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  ReactComponentElement,
-  ReactElement,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, ReactElement, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { api } from "../services";
 import { loginRequest } from "../services/login";
@@ -17,7 +11,7 @@ interface ILoginData {
 }
 
 interface IAuthContext {
-  user: string;
+  userToken: string;
   login: (data: ILoginData) => Promise<void>;
   logout: () => void;
 }
@@ -29,33 +23,33 @@ interface Props {
 }
 
 export const AuthProvider = ({ children }: Props) => {
-  const [user, setUser] = useState("");
+  const [userToken, setUserToken] = useState("");
 
   async function login(data: ILoginData): Promise<void> {
     const loginData = await loginRequest(data);
 
     if (loginData) {
-      console.log(loginData);
       const stringifiedToken = JSON.stringify(loginData.token);
-      localStorage.setItem("user", stringifiedToken);
-      setUser(stringifiedToken);
+      localStorage.setItem("token", stringifiedToken);
+      setUserToken(stringifiedToken);
     }
   }
 
   function logout(): ReactElement {
-    setUser("");
-    localStorage.removeItem("user");
+    setUserToken("");
+    localStorage.clear();
     api.defaults.headers.common["Authorization"] = ``;
     return <Navigate to="/login" />;
-  } // TODO remover restos do user, redirecionar para login
+  }
 
   function handleUserAuthentication() {
-    const stringfiedUser = localStorage.getItem("user");
+    const stringfiedUser = localStorage.getItem("token");
 
     if (!stringfiedUser) {
+      logout();
       return;
     } //logout
-    setUser(stringfiedUser);
+    setUserToken(stringfiedUser);
     const user = JSON.parse(stringfiedUser);
 
     api.defaults.headers.common["Authorization"] = `Bearer ${user}`;
@@ -63,10 +57,10 @@ export const AuthProvider = ({ children }: Props) => {
 
   useEffect(() => {
     handleUserAuthentication();
-  }, [user]);
+  }, [userToken]);
 
   return (
-    <AuthContext.Provider value={{ login, logout, user }}>
+    <AuthContext.Provider value={{ login, logout, userToken }}>
       {children}
     </AuthContext.Provider>
   );

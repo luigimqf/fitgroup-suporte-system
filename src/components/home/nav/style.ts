@@ -1,35 +1,39 @@
 import styled from "styled-components";
 
 interface IContainerStyle {
-  display: boolean;
+  $display: boolean;
 }
 
-export const Container = styled.div`
-  height: 100vh;
-  width: fit-content;
-  display: flex;
-  justify-content: flex-end;
-  position: fixed;
-  background-color: tranperent;
-`;
-
-export const SideBar = styled.div<IContainerStyle>`
-  width: ${(props) => (props.display ? "0px" : "150px")};
+export const Container = styled.div<IContainerStyle>`
   height: 100%;
-  background-color: blue;
-  transition: 0.5s;
+  width: 25%;
+  background-color: tranperent;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  position: ${(props) => (props ? "flex" : "fixed")};
+  background-color: tranperent;
+  z-index: 1;
+
+  @media (max-width: 1100px) {
+    position: ${(props) => (props ? "absolute" : "fixed")};
+    width: 40%;
+  }
+
+  @media (max-width: 600px) {
+    width: 70%;
+  }
 `;
 
 export const Toggle = styled.div`
   width: 50px;
   height: 50px;
-  background-color: #fff;
+  background-color: red;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
+  @media (min-width: 1100px) {
+    display: none;
+  }
 `;

@@ -7,9 +7,9 @@ interface Props {
 }
 
 const ProtectedRoute = ({ children }: Props) => {
-  const { user } = useContext(AuthContext);
+  const { userToken } = useContext(AuthContext);
 
-  return user ? <>{children}</> : <Navigate to="/login" replace />;
+  return userToken ? <>{children}</> : <Navigate to="/login" replace />;
 };
 
 export default ProtectedRoute;

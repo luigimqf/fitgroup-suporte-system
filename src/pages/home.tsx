@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
-import { BiLogOut } from "react-icons/bi";
+import { useState } from "react";
 import { Nav } from "../components/home/nav/Nav";
-import { AuthContext } from "../context/AuthContext";
+import { Wrapper } from "../components/home/style";
+import { Tickets } from "../components/home/tickets/Tickets";
 
 export function Home() {
-  const { logout } = useContext(AuthContext);
+  const [display, setDisplay] = useState(false);
   return (
-    <>
+    <Wrapper>
       <Nav />
-    </>
+      <Tickets />
+    </Wrapper>
   );
 }

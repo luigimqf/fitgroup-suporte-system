@@ -6,6 +6,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserInfoContext, UserInfoProvider } from "./context/UserContext";
 
 function App() {
   return (
@@ -14,11 +15,14 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
+
           <Route
             path="/"
             element={
               <ProtectedRoute>
-                <Home />
+                <UserInfoProvider>
+                  <Home />
+                </UserInfoProvider>
               </ProtectedRoute>
             }
           />

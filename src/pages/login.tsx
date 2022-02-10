@@ -15,7 +15,7 @@ export function Login() {
   const { toast, dismiss } = useToast();
   const [isLoading, setLoadingStatus] = useState(false);
   const [allowed, setAllowed] = useState(true);
-  const { login, user } = useContext(AuthContext);
+  const { login, userToken } = useContext(AuthContext);
   const loadingToast = useRef("" as React.ReactText);
 
   async function handleLogin(loginData: ILoginData) {
@@ -57,7 +57,7 @@ export function Login() {
     }
   }, [isLoading]);
 
-  if (user && allowed) return <Navigate to="/" />;
+  if (userToken && allowed) return <Navigate to="/" />;
 
   return (
     <LoginContainer>
